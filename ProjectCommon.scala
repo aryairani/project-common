@@ -3,6 +3,7 @@ package net.arya
 import sbt._, sbt.dsl._, sbt.Keys._
 
 import com.typesafe.sbt.{GitVersioning, GitPlugin}
+import sbt.internals.DslEntry
 import wartremover.WartRemover
 import xerial.sbt.Sonatype
 
@@ -25,9 +26,7 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
       "-Ywarn-numeric-widen",
       "-Ywarn-value-discard",
       "-Xfuture"
-    ),
-    libraryDependencies += "com.lihaoyi" % "ammonite-repl" % "0.3.2" % "test" cross CrossVersion.full,
-    initialCommands in (Test, console) := """ammonite.repl.Repl.run("")"""
+    )
   ) ++ kindProjector
 
   // https://github.com/non/cats
@@ -80,7 +79,10 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
       }
     )
 
-    val gitDescribeVersioning = Seq(enablePlugins(GitVersioning), GitPlugin.autoImport.git.useGitDescribe := true)
+    val ammonite = Seq(
+      libraryDependencies += "com.lihaoyi" % "ammonite-repl" % "0.3.2" % "test" cross CrossVersion.full,
+      initialCommands in (Test, console) := """ammonite.repl.Repl.run("")"""
+    )
 
     // todo: a way to include dependency as git submodule
     // https://github.com/rossabaker/scataz
@@ -88,7 +90,8 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
     val refriedSonatype = common.refriedSonatype
   }
 
-  lazy val refriedSonatype =
+  lazy val refriedSonatype = Seq(
+    organization := "net.arya",
     pomExtra := {
       <url>http://github.com/refried/${name.value}</url>
         <licenses>
@@ -110,4 +113,5 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
           </developer>
         </developers>
     }
+  )
 }
