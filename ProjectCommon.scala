@@ -1,12 +1,13 @@
 package net.arya
 
-import com.typesafe.sbt.GitPlugin
 import sbt._, sbt.Keys._
+import com.typesafe.sbt.GitPlugin
 import wartremover.WartRemover
+import xerial.sbt.Sonatype
 
 object ProjectCommon extends sbt.AutoPlugin { common =>
   override def trigger = allRequirements
-  override def requires = WartRemover && GitPlugin
+  override def requires = WartRemover && GitPlugin && Sonatype
   override val projectSettings = Seq(
     scalaVersion := "2.11.6",
     scalacOptions ++= Seq(
@@ -26,7 +27,6 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
     ),
     libraryDependencies += "com.lihaoyi" % "ammonite-repl" % "0.3.2" % "test" cross CrossVersion.full,
     initialCommands in (Test, console) := """ammonite.repl.Repl.run("")"""
-//    ,wartremoverErrors ++= Warts.unsafe
   ) ++ kindProjector
 
   // https://github.com/non/cats
