@@ -1,7 +1,8 @@
 package net.arya
 
-import sbt._, sbt.Keys._
-import com.typesafe.sbt.GitPlugin
+import sbt._, sbt.dsl._, sbt.Keys._
+
+import com.typesafe.sbt.{GitVersioning, GitPlugin}
 import wartremover.WartRemover
 import xerial.sbt.Sonatype
 
@@ -78,6 +79,8 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
         )
       }
     )
+
+    val gitDescribeVersioning = Seq(enablePlugins(GitVersioning), GitPlugin.autoImport.git.useGitDescribe := true)
 
     // todo: a way to include dependency as git submodule
     // https://github.com/rossabaker/scataz

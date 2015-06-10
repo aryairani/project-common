@@ -8,9 +8,7 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.8.4")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.5.0")
 
 enablePlugins(GitVersioning)
-
 enablePlugins(GitBranchPrompt)
-
 git.useGitDescribe := true
 
 resolvers += "bintray/non" at "http://dl.bintray.com/non/maven"
