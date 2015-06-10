@@ -1,11 +1,12 @@
 package net.arya
 
+import com.typesafe.sbt.GitPlugin
 import sbt._, sbt.Keys._
 import wartremover.WartRemover
 
 object ProjectCommon extends sbt.AutoPlugin { common =>
   override def trigger = allRequirements
-  override def requires = WartRemover
+  override def requires = WartRemover && GitPlugin
   override val projectSettings = Seq(
     scalaVersion := "2.11.6",
     scalacOptions ++= Seq(
