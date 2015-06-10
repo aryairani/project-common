@@ -26,7 +26,7 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
     libraryDependencies += "com.lihaoyi" % "ammonite-repl" % "0.3.2" % "test" cross CrossVersion.full,
     initialCommands in (Test, console) := """ammonite.repl.Repl.run("")"""
 //    ,wartremoverErrors ++= Warts.unsafe
-  ) ++ kindProjector ++ linter
+  ) ++ kindProjector
 
   // https://github.com/non/cats
   lazy val cats = Seq(
@@ -48,6 +48,7 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
 
   object autoImport {
     val macroParadise = addCompilerPlugin("org.scalamacros" %% "paradise" % "2.0.1" cross CrossVersion.full)
+    val linter = common.linter
 
     val scalaReflect = libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
 
@@ -76,5 +77,8 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
         )
       }
     )
+
+    // todo: a way to include dependency as git submodule
+    // https://github.com/rossabaker/scataz
   }
 }
