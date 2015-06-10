@@ -81,5 +81,30 @@ object ProjectCommon extends sbt.AutoPlugin { common =>
 
     // todo: a way to include dependency as git submodule
     // https://github.com/rossabaker/scataz
+
+    val refriedSonatype = common.refriedSonatype
   }
+
+  lazy val refriedSonatype =
+    pomExtra := {
+      <url>http://github.com/refried/${name.value}</url>
+        <licenses>
+          <license>
+            <name>MIT</name>
+            <url>http://opensource.org/licenses/MIT</url>
+          </license>
+        </licenses>
+        <scm>
+          <connection>scm:git:github.com/refried/${name.value}</connection>
+          <developerConnection>scm:git:git@github.com:refried/${name.value}</developerConnection>
+          <url>github.com/refried/${name.value}</url>
+        </scm>
+        <developers>
+          <developer>
+            <id>arya</id>
+            <name>Arya Irani</name>
+            <url>https://github.com/refried</url>
+          </developer>
+        </developers>
+    }
 }
